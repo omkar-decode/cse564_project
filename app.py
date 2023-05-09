@@ -30,7 +30,7 @@ def spiderChart(country_code):
         'Cost of legumes, nuts and seeds',
         'Cost of oils and fats']
 
-    df_sc = df_sc[cost_columns]
+    df_sc = df_sc[cost_columns] * 30
     df_sc = df_sc.to_frame()
     df_sc['axis'] = df_sc.index
     df_sc['id'] = [country_code] * 6
@@ -56,18 +56,18 @@ def spiderChart(country_code):
 #     return jsonify(result)
 
 
-@app.route("/linePlot/<prop>/<prop2>")
-def linePlot(prop,prop2):
-    country_name = str(prop)
-    column_name = str(prop2)
-    df = df_clean.copy()
-    if country_name != 'world':
-        df = df.loc[df['Country'].astype(str) == str(country_name)]
-    age_counts = pd.DataFrame(df[column_name].value_counts().reset_index().values, columns=[column_name, "frequency"])
-    age_counts = age_counts.sort_index(axis=0, ascending=True)
-    age_counts = age_counts.sort_values(by=[column_name])
-    result = list(age_counts.T.to_dict().values())
-    return jsonify(result)
+# @app.route("/linePlot/<prop>/<prop2>")
+# def linePlot(prop,prop2):
+#     country_name = str(prop)
+#     column_name = str(prop2)
+#     df = df_clean.copy()
+#     if country_name != 'world':
+#         df = df.loc[df['Country'].astype(str) == str(country_name)]
+#     age_counts = pd.DataFrame(df[column_name].value_counts().reset_index().values, columns=[column_name, "frequency"])
+#     age_counts = age_counts.sort_index(axis=0, ascending=True)
+#     age_counts = age_counts.sort_values(by=[column_name])
+#     result = list(age_counts.T.to_dict().values())
+#     return jsonify(result)
 
 
 if __name__ == '__main__':
