@@ -92,7 +92,8 @@ function ready(error, data, population) {
         })
         .on('click',function(d){
         country_name = d.properties.name
-        console.log(country_name)
+        country_code = data.features.filter(country => country.properties.name == country_name)[0].id
+        createSpiderChart(country_code)
         // pcp()
         // line_plot('Age');
         // line_plot('Value');
