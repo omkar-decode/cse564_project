@@ -92,21 +92,19 @@ function ready(error, data, population) {
         })
         .on('click',function(d){
         country_name = d.properties.name
-        pcp()
-        line_plot('Age');
-        line_plot('Value');
-        line_plot('Overall');
-        wc();
-        club_logo();
-        })
-        .on('dblclick',function(d){
-        country_name = "world"
-        pcp()
-        line_plot('Age');
-        line_plot('Value');
-        line_plot('Overall');
-        wc();
+        console.log(country_name)
+        // pcp()
+        // line_plot('Age');
+        // line_plot('Value');
+        // line_plot('Overall');
         });
+        // .on('dblclick',function(d){
+        // country_name = "world"
+        // pcp()
+        // line_plot('Age');
+        // line_plot('Value');
+        // line_plot('Overall');
+        // });
 
   svg.append("path")
       .datum(topojson.mesh(data.features, function(a, b) { return a.id !== b.id; }))

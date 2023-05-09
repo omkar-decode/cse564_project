@@ -1,16 +1,18 @@
 
-function createSpiderChart(ID,Name) {
+function createSpiderChart(ID) {
 	fetch('/spiderChart/'+ID)
 	.then(function(response){
 	return response.json()
 	}).then(function(data_input){
 
+	// console.log(data_input)
 	var data = [
-					{ name: Name,
+					{ name: ID,
 
 						axes: data_input
 					}
 				];
+	// console.log(data)
 	//var color = d3.scale.ordinal()
 	//				.range(["#EDC951"]); //,"#CC333F","#00A0B0"
 
@@ -103,7 +105,7 @@ function createSpiderChart(ID,Name) {
 
 		//If the supplied maxValue is smaller than the actual one, replace by the max in the data
 		// var maxValue = max(cfg.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
-		let maxValue = 100;
+		let maxValue = 1.2;
 		for (let j=0; j < data.length; j++) {
 			for (let i = 0; i < data[j].axes.length; i++) {
 				data[j].axes[i]['id'] = data[j].name;
