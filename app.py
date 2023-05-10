@@ -65,7 +65,8 @@ def pcp(country_name, year):
 @app.route("/wc/<country_name>/<year>")
 def wc(country_name, year):
     df_wc = df_clean.copy()
-    df_wc = df_wc[df_wc['start_year'] == int(year)][df_wc['country_txt'] == country_name][['country_txt', 'targtype1_txt', 'iyear']]
+    df_wc = df_wc[df_wc['start_year'] == int(year)][['country_txt', 'targtype1_txt', 'iyear']]
+    df_wc = df_wc[df_wc['country_txt'] == country_name]
     df_wc_agg = df_wc.groupby(['country_txt', 'targtype1_txt']).count()
     df_wc_agg = df_wc_agg.reset_index()
     df_wc_agg = df_wc_agg.drop(['country_txt'], axis = 1)
