@@ -1,12 +1,12 @@
 
-function createSpiderChart(country_code) {
-	fetch('/spiderChart/' + country_code)
+function createSpiderChart(country_name) {
+	fetch('/spiderChart/' + country_name)
 	.then(function(response){
 	return response.json()
 	}).then(function(data_input){
 
 	var data = [
-					{ name: country_code,
+					{ name: country_name,
 
 						axes: data_input
 					}
