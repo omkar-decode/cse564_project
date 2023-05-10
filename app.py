@@ -10,6 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 df_clean = pd.read_csv("data/data_final.csv")
+df_other = pd.read_csv("data/fifa_processed_final.csv")
 
 
 @app.route('/dashboard', methods = ['GET','POST'])
@@ -39,21 +40,22 @@ def spiderChart(country_code):
     return jsonify(result)
 
 
-# @app.route("/pcp/<prop>")
-# def pcp(prop):
-#     prop = str(prop)
-#     df_pcp = df_clean.copy()
-#     if prop!='world':
-#         df_pcp = df_pcp.loc[df_pcp['Country'].astype(str) == str(prop)]
-#     df_pcp = df_pcp[['Club','Age','Value','Wage','Overall','Release Clause']]
-#     attr_cols = ['Age','Value','Wage','Overall','Release Clause']
-#     df_pcp_agg = df_pcp.groupby("Club").mean()
-#     df_pcp_agg['Wage'] = df_pcp_agg['Wage'].astype(str).astype(float)
-#     df_pcp_agg['Club'] = df_pcp_agg.index
-#     s = min(len(df_pcp_agg),22)
-#     df_pcp_agg = df_pcp_agg.sample(n = s)
-#     result = list(df_pcp_agg.T.to_dict().values())
-#     return jsonify(result)
+@app.route("/pcp/<country_name>")
+def pcp(country_name):
+    prop = str(country_name)
+    df_pcp = df_other.copy()
+    if country_name!='world':
+        df_pcp = df_pcp.loc[df_pcp['Country'].astype(str) == str(country_name)]
+    df_pcp = df_pcp[['Club','Age','Value','Wage','Overall','Release Clause']]
+    attr_cols = ['Age','Value','Wage','Overall','Release Clause']
+    df_pcp_agg = df_pcp.groupby("Club").mean()
+    df_pcp_agg['Wage'] = df_pcp_agg['Wage'].astype(str).astype(float)
+    df_pcp_agg['Club'] = df_pcp_agg.index
+    s = min(len(df_pcp_agg),22)
+    df_pcp_agg = df_pcp_agg.sample(n = s)
+    result = list(df_pcp_agg.T.to_dict().values())
+    print(result)
+    return jsonify(result)
 
 
 # @app.route("/linePlot/<prop>/<prop2>")

@@ -12,7 +12,7 @@ var tip = d3.tip()
             })
 
 var margin = {top: 0, right: 0, bottom: 0, left: 0},
-            width = 1200 - margin.left - margin.right,
+            width = 1100 - margin.left - margin.right,
             height = 550 - margin.top - margin.bottom;
 
 var color = d3.scaleThreshold()
@@ -94,7 +94,7 @@ function ready(error, data, population) {
         country_name = d.properties.name
         country_code = data.features.filter(country => country.properties.name == country_name)[0].id
         createSpiderChart(country_code)
-        // pcp()
+        pcp(country_name)
         // line_plot('Age');
         // line_plot('Value');
         // line_plot('Overall');
