@@ -44,6 +44,15 @@ def pcp(country_name, year):
     df_pcp = df_clean.copy()
     df_pcp = df_pcp[df_pcp['start_year'] == int(year)][['iyear', 'country_txt', 'city', 'gname', 'attacktype1_txt', 'targtype1_txt', 'targsubtype1_txt', 'weaptype1_txt']]
     df_pcp = df_pcp[df_pcp['country_txt'] == country_name]
+    df_pcp = df_pcp[df_pcp['city'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['attacktype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['gname'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['targtype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['targsubtype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['weaptype1_txt'] != 'Unknown']
+    num_points = min(80, len(df_pcp))
+    df_pcp = df_pcp.iloc[:num_points]
+    df_pcp = df_pcp.rename(columns={'country_txt': 'Country', 'attacktype1_txt': 'Attack Type', 'city': 'City', 'gname': 'Group Name', 'targtype1_txt': 'Target Type', 'targsubtype1_txt': 'Target Subtype', 'weaptype1_txt': 'Weapon Type'})
     result = list(df_pcp.T.to_dict().values())
     return jsonify(result)
 

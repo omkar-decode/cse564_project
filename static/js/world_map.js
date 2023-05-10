@@ -92,7 +92,8 @@ function ready(error, data, population) {
         })
         .on('click',function(d){
         country_name = d.properties.name
-        createSpiderChart(country_name)
+        pcp(country_name, year)
+        // createSpiderChart(country_name)
         // pcp(country_name)
         // line_plot('Age');
         // line_plot('Value');

@@ -1,42 +1,41 @@
-function pcp(country_name){
-
-var margin = {top: 50, right: 50, bottom: 50, left: 150},
-			width = 750 - margin.left - margin.right,
-			height = 400 - margin.top - margin.bottom;
-	fetch('/pcp/' + country_name)
+function pcp(country_name, year){
+var margin = {top: 160, right: 50, bottom: 50, left: 100},
+			width = 1100 - margin.left - margin.right,
+			height = 600 - margin.top - margin.bottom;
+	fetch('/pcp/' + country_name + '/' + year)
         .then(function(response){
         return response.json()
         }).then(function(data)  {
 				var dimensions = [
 				{
-					name: "Club",
-					scale: d3.scaleBand().range([0, height]),
-					type: "string"
+					name: "City",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				},
 				{
-					name: "Value",
-					scale: d3.scaleLinear().range([height, 0]),
-    				type: "number"
+					name: "Group Name",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				},
 				{
-					name: "Wage",
-					scale: d3.scaleLinear().range([height, 0]),
-    				type: "number"
+					name: "Attack Type",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				},
 				{
-					name: "Release Clause",
-					scale: d3.scaleLinear().range([height, 0]),
-    				type: "number"
+					name: "Target Type",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				},
 				{
-					name: "Age",
-					scale: d3.scaleLinear().range([height, 0]),
-    				type: "number"
+					name: "Target Subtype",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				},
 				{
-					name: "Overall",
-					scale: d3.scaleLinear().range([height, 0]),
-    				type: "number"
+					name: "Weapon Type",
+					scale: d3.scaleBand().range([height, 0]),
+    				type: "string"
 				}
 			];
 var color = d3.scaleOrdinal()
