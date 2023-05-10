@@ -98,6 +98,7 @@ function ready(error, data, population) {
         // line_plot('Age');
         // line_plot('Value');
         // line_plot('Overall');
+        wc(country_name, year)
         });
         // .on('dblclick',function(d){
         // country_name = "world"

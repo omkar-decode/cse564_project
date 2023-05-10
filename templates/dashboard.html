@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Asteroid Visualization</title>
+    <title>Visualization</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/d3-tip.css">
     <link rel="stylesheet" type="text/css" href="../static/css/hp.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/pcp.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/pcp.css"> -->
 
     <script src="../static/js/d3.v4.js"></script>
     <script src="../static/js/d3-tip-test.js"></script>
@@ -20,15 +20,18 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="../static/js/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
     <script src="../static/js/spiderChart.js"></script>
     <script src="../static/js/parallel.js"></script>
     <script src="../static/js/pcp.js"></script>
     <script src="../static/js/world_map.js"></script>
     <!-- <script src="../static/js/pitch_plot.js"></script> -->
-    <!-- <script src="../static/js/word_cloud.js"></script> -->
+    <script src="../static/js/word_cloud.js"></script>
     <!-- <script src="../static/js/line_plot.js"></script> -->
     <!-- <script src="../static/js/player_card.js"></script> -->
     <script src="../static/js/post.js"></script>
+    <!-- <script src="../static/js/multi-line-plot.js"></script> -->
+    <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
   </head>
   <body>
@@ -47,10 +50,15 @@
               </div>
           </div>
           <div class="row">
+            
           </div>
         </div>
           <div class="col-xs-5 col-md-5" style="font-weight: bold;padding-left: 3%; height: 880px;width: 780px;">
               <div class="col-xs-6 col-md-6"id="spider" style="margin-top: 10%;">
+                
+            </div>
+            <div class="col-xs-4 col-md-4 box" id="word_cloud"  style=" width: 407px;">
+              <h4 style="text-align: center;font-size: 150%">Word Cloud</h4>
             </div>
             <!-- <div class="col-xs-3 col-md-3" style="padding-left: 5%;width: 27%;height: 430px;width: 407px;">
               <div class="row" id="Age" >
@@ -66,6 +74,8 @@
               </div>
             </div>   -->
           </div>
+           
+          <!-- <div id="chart">multi-line-plot</div> -->
       </div>
     </div>
   </body>
@@ -76,13 +86,13 @@
   var country_name = 'United States'
   var year = 2010
   world_map(year);
-  // plotPCP(country_name, year)
 //   line_plot('Overall');
 //   line_plot('Age');
 //   line_plot('Value');
   // createSpiderChart(country_name);
   pcp(country_name, year);
-
+  //create_multiline_chart();
+  wc(country_name, year);
 </script>
 <link rel="stylesheet" type="text/css" href="../static/css/pro-style.css">
 </html>
