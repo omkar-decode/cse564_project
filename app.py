@@ -9,7 +9,7 @@ import pandas as pd
 app = Flask(__name__)
 CORS(app)
 
-df_clean = pd.read_csv("data/data_final.csv")
+df_clean = pd.read_csv('data/terrorism_data_clean.csv', index_col=False)
 
 
 @app.route('/dashboard', methods = ['GET','POST'])
@@ -17,10 +17,10 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route("/spiderChart/<country_code>")
-def spiderChart(country_code):
+@app.route("/spiderChart/<country_name>")
+def spiderChart(country_name):
     df_sc = df_clean.copy()
-    df_sc = df_sc.loc[df_sc['Country Code'].astype(str) == str(country_code)].iloc[0]
+    df_sc = df_sc.loc[df_sc['country_txt'].astype(str) == str(country_name)].iloc[0]
     # print(df_sc)
     
     cost_columns = ['Cost of fruits', 
@@ -33,27 +33,28 @@ def spiderChart(country_code):
     df_sc = df_sc[cost_columns] * 30
     df_sc = df_sc.to_frame()
     df_sc['axis'] = df_sc.index
-    df_sc['id'] = [country_code] * 6
+    df_sc['id'] = [country_name] * 6
     df_sc = df_sc.rename(columns = {df_sc.columns[0]: "value"})
     result = list(df_sc.T.to_dict().values())
     return jsonify(result)
 
 
-# @app.route("/pcp/<prop>")
-# def pcp(prop):
-#     prop = str(prop)
-#     df_pcp = df_clean.copy()
-#     if prop!='world':
-#         df_pcp = df_pcp.loc[df_pcp['Country'].astype(str) == str(prop)]
-#     df_pcp = df_pcp[['Club','Age','Value','Wage','Overall','Release Clause']]
-#     attr_cols = ['Age','Value','Wage','Overall','Release Clause']
-#     df_pcp_agg = df_pcp.groupby("Club").mean()
-#     df_pcp_agg['Wage'] = df_pcp_agg['Wage'].astype(str).astype(float)
-#     df_pcp_agg['Club'] = df_pcp_agg.index
-#     s = min(len(df_pcp_agg),22)
-#     df_pcp_agg = df_pcp_agg.sample(n = s)
-#     result = list(df_pcp_agg.T.to_dict().values())
-#     return jsonify(result)
+@app.route("/pcp/<country_name>/<year>")
+def pcp(country_name, year):
+    df_pcp = df_clean.copy()
+    df_pcp = df_pcp[df_pcp['start_year'] == int(year)][['iyear', 'country_txt', 'city', 'gname', 'attacktype1_txt', 'targtype1_txt', 'targsubtype1_txt', 'weaptype1_txt']]
+    df_pcp = df_pcp[df_pcp['country_txt'] == country_name]
+    df_pcp = df_pcp[df_pcp['city'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['attacktype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['gname'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['targtype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['targsubtype1_txt'] != 'Unknown']
+    df_pcp = df_pcp[df_pcp['weaptype1_txt'] != 'Unknown']
+    num_points = min(80, len(df_pcp))
+    df_pcp = df_pcp.iloc[:num_points]
+    df_pcp = df_pcp.rename(columns={'country_txt': 'Country', 'attacktype1_txt': 'Attack Type', 'city': 'City', 'gname': 'Group Name', 'targtype1_txt': 'Target Type', 'targsubtype1_txt': 'Target Subtype', 'weaptype1_txt': 'Weapon Type'})
+    result = list(df_pcp.T.to_dict().values())
+    return jsonify(result)
 
 
 # @app.route("/linePlot/<prop>/<prop2>")
@@ -68,6 +69,19 @@ def spiderChart(country_code):
 #     age_counts = age_counts.sort_values(by=[column_name])
 #     result = list(age_counts.T.to_dict().values())
 #     return jsonify(result)
+
+
+@app.route("/wc/<country_name>/<year>")
+def wc(country_name, year):
+    df_wc = df_clean.copy()
+    df_wc = df_wc[df_wc['start_year'] == int(year)][['country_txt', 'targtype1_txt', 'iyear']]
+    df_wc = df_wc[df_wc['country_txt'] == country_name]
+    df_wc_agg = df_wc.groupby(['country_txt', 'targtype1_txt']).count()
+    df_wc_agg = df_wc_agg.reset_index()
+    df_wc_agg = df_wc_agg.drop(['country_txt'], axis = 1)
+    df_wc_agg = df_wc_agg.rename(columns={'targtype1_txt': 'target_type', 'iyear': 'count'})
+    result = list(df_wc_agg.T.to_dict().values())
+    return jsonify(result)
 
 
 if __name__ == '__main__':
