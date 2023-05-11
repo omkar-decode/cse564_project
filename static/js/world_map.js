@@ -15,7 +15,7 @@ var tip = d3.tip()
 
 var margin = {top: 0, right: 0, bottom: 0, left: 0},
             width = 1100 - margin.left - margin.right,
-            height = 550 - margin.top - margin.bottom;
+            height = 600 - margin.top - margin.bottom;
 
 var color = d3.scaleThreshold()
     .domain([0,10,50,100,200,500,800,1000,3000,5000])

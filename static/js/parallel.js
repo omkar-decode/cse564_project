@@ -60,6 +60,7 @@ var color = d3.scaleOrdinal()
 
             d3.selectAll("#pcp svg").remove()
 			var svg = d3.select("#pcp").append("svg")
+			.style("margin-left", "100px")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
 				.append("g")
