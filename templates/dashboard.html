@@ -20,7 +20,7 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="../static/js/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <script src="../static/js/spiderChart.js"></script> -->
+    <script src="../static/js/year_buttons.js"></script>
     <script src="../static/js/pie.js"></script>
     <script src="../static/js/parallel.js"></script>
     <script src="../static/js/world_map.js"></script>
@@ -37,6 +37,13 @@
         <div class="col-xs-6 col-md-6">
           <div class="row" style="margin-top: 10px;">
               <div class="col-xs-8 col-md-8" id="world_map" style="  height: 450px;width:710px;padding-left: 0px;">
+                <div id="year_buttons" class="btn-group" style="margin-left: 40px;">
+                  <button id="btn1" type="button" class="btn btn-primary active" onclick="onYearButtonClicked(this)">1970-1980</button>
+                  <button id="btn2" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1980-1990</button>
+                  <button id="btn3" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1990-2000</button>
+                  <button id="btn4" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">2000-2010</button>
+                  <button id="btn5" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">2010-2020</button>
+                </div>
                 <!-- <h4 style="text-align: center;font-size: 150%">World Map</h4> -->
               </div>
               <div class="container" style="padding-top: 20px;">

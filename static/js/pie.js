@@ -54,7 +54,7 @@ function pieChart(country_name, year) {
             
                 g.append("text")
                   .attr("class", "value-text")
-                  .text(`${d.data['Percentage']}`)
+                  .text(`${d.data['Percentage']}` + '%')
                   .attr('text-anchor', 'middle')
                   .attr('dy', '1.6em')
                   .style("font-size", "18px");;

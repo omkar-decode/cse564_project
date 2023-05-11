@@ -1,6 +1,6 @@
 function world_map(year) {
 
-
+  d3.selectAll("#world_map svg").remove()
 var format = d3.format(",");
 
 // Set tooltips
