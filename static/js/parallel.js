@@ -1,7 +1,7 @@
 function pcp(country_name, year){
 var margin = {top: 160, right: 50, bottom: 50, left: 100},
 			width = 1100 - margin.left - margin.right,
-			height = 580 - margin.top - margin.bottom;
+			height = 630 - margin.top - margin.bottom;
 	fetch('/pcp/' + country_name + '/' + year)
         .then(function(response){
         return response.json()
@@ -39,7 +39,8 @@ var margin = {top: 160, right: 50, bottom: 50, left: 100},
 				},
 			];
 var color = d3.scaleOrdinal()
-  .range(["#5298af","#D58323","#bd1a9a","#54AF52","#8C92E8","#E15E5A","#725D82","#776327","#50AB84","#954D56","#AB9C27","#517C3F","#9D5130","#357468","#5E9ACF","#C47DCB","#7D9E33","#DB7F85","#BA89AD","#4C6C86","#B59248","#D8597D","#944F7E","#D67D4B","#8F86C2"]);
+  .range(["#FF0000", "#FFC0CB", "#DC143C", "#FFA07A", "#FF6347", "#FF4500", "#FF8C00", "#FFD700", "#FF69B4", "#FF1493", "#B22222", "#A52A2A", "#8B0000", "#800000", "#FF5733", "#E60073", "#FF00FF", "#800080", "#9400D3", "#8A2BE2"])
+//.range(["#5298af","#D58323","#bd1a9a","#54AF52","#8C92E8","#E15E5A","#725D82","#776327","#50AB84","#954D56","#AB9C27","#517C3F","#9D5130","#357468","#5E9ACF","#C47DCB","#7D9E33","#DB7F85","#BA89AD","#4C6C86","#B59248","#D8597D","#944F7E","#D67D4B","#8F86C2"]);
 
 
 			var x = d3.scaleBand().domain(dimensions.map(function(d) { return d.name; })).range([0, width]),

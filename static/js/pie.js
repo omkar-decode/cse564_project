@@ -15,9 +15,12 @@ function pieChart(country_name, year) {
           var duration = 750;
           
           var radius = Math.min(width, height) / 2;
-          var color = d3.scaleOrdinal(d3.schemeCategory10);
+          //var color = d3.scaleOrdinal(d3.schemeCategory10);
+         // var color = ["#FF0000", "#FFC0CB", "#DC143C", "#FFA07A", "#FF6347", "#FF4500", "#FF8C00", "#FFD700", "#FF69B4", "#FF1493"]
           
-          var svg = d3.select("#pie_chart")
+         var color = ["#FF0000", "#FF4500", "#DC143C", "#FF6347", "#FF8C00", "#FFA07A", "#FF5733", "#FFC0CB", "#FF1493", "#E60073"]
+
+         var svg = d3.select("#pie_chart")
           .append('svg')
           .attr('class', 'pie')
           .attr('width', width)
@@ -69,7 +72,7 @@ function pieChart(country_name, year) {
             .on("mouseout", function(d) {
                 d3.select(this)
                   .style("cursor", "none")  
-                  .style("fill", color(this._current))
+                  .style("fill", color[this._current])
                   .select(".text-group").remove()
 
                 let g = d3.select(this)
@@ -87,7 +90,7 @@ function pieChart(country_name, year) {
               })
             .append('path')
             .attr('d', arc)
-            .attr('fill', (d,i) => color(i))
+            .attr('fill', (d,i) => color[i])
             .on("mouseover", function(d) {
                 d3.select(this)     
                   .style("cursor", "pointer")
@@ -96,7 +99,7 @@ function pieChart(country_name, year) {
             .on("mouseout", function(d) {
                 d3.select(this)
                   .style("cursor", "none")  
-                  .style("fill", color(this._current));
+                  .style("fill", color[this._current]);
               })
             .each(function(d, i) { this._current = i; });
           
