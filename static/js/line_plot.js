@@ -32,8 +32,8 @@ function create_chart(country_name,year) {
         transformed_data.push(woundedObj)
         data = transformed_data
 
-      var width = 500;
-      var height = 300;
+      var width = 550;
+      var height = 400;
       var margin = 50;
       var duration = 250;
       
@@ -98,6 +98,7 @@ function create_chart(country_name,year) {
               .attr("class", "title-text")
               .style("fill", color(i))        
               .text(d.name)
+              .style("font-size", '20px')
               .attr("text-anchor", "middle")
               .attr("x", (width-margin)/2)
               .attr("y", 5);

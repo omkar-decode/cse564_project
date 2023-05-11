@@ -36,7 +36,7 @@
 }
 
 .axis path {
-  stroke: black;
+  stroke: white;
 }
 
 .text {
@@ -53,11 +53,11 @@
       <div id="mds1" style="color: white; max-width: 100vw;overflow: visible;min-height:100vh;">
       </nav> -->
       <div class="row" style="backdrop-filter: blur(8px);">
-        <div class="col-xs-7 col-md-6">
+        <div class="col-xs-7 col-md-5">
           <div class="row" style="margin-top: 10px;">
-              <div class="col-xs-8 col-md-8" id="world_map" style="  height: 450px;width:710px;padding-left: 0px;">
-                <div id="year_buttons" class="btn-group" style="margin-left: 40px;">
-                  <button id="btn1" type="button" class="btn btn-primary active" onclick="onYearButtonClicked(this)">1970-1980</button>
+              <div id="world_map" style="  height: 800px;width:700px; padding-bottom: 200px;">
+                <div id="year_buttons" class="btn-group" style="margin-left: 40px; margin-bottom: 20px; margin-top: 30px;">
+                  <button id="btn1" type="button" class="btn btn-primary active btn-danger" onclick="onYearButtonClicked(this)">1970-1980</button>
                   <button id="btn2" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1980-1990</button>
                   <button id="btn3" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1990-2000</button>
                   <button id="btn4" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">2000-2010</button>
@@ -65,29 +65,28 @@
                 </div>
                 <!-- <h4 style="text-align: center;font-size: 150%">World Map</h4> -->
               </div>
-              <div class="container" style="padding-top: 20px;">
-                <!-- <h4 style="padding-top: 30px; padding-left: 520px;">Parallel Coordinate Plot</h4> -->
-                  <div id="pcp" class="pcp" style="padding-top: 25px; padding-left: 40px;"></div>
+              
+              <div class="col-xs-5 col-md-5" id="pie_chart" style="padding-left: 100px;"></div>
+              <div class="col-xs-5 col-md-5" style="font-weight: bold; padding-left: 200px;">
+  
+                  <div id="word_cloud"></div>
               </div>
-          </div>
-          <div class="row">
-            
-          </div>
+          
         </div>
-        <div class="col-xs-7 col-md-6">
-          <div class="col-xs-5 col-md-5" style="font-weight: bold; height: 500px;width: 500px;">
-            <!-- <div class="col-xs-6 col-md-6"id="spider" style="margin-top: 10%;"> -->
-              <div id="word_cloud"></div>
-          </div>
-          <div id="pie_chart" style="margin-left: 480px; margin-top: 100px;">
-            <!-- <h4 style="text-align: center;font-size: 150%">Pie Chart</h4> -->
-          </div>
+        
            
         </div>
-        <div class="col-xs-3 col-md-3" style="padding-left: 300px; height: 250px;width: 600px; margin-top: 150px">
-          <div  class="row" id="chart"></div> 
-        </div>
+        <div class="col-xs-7 col-md-6">
+          <div style="padding-top: 20px;">
+            <!-- <h4 style="padding-top: 30px; padding-left: 520px;">Parallel Coordinate Plot</h4> -->
+              <div id="pcp" class="pcp"></div>
+          </div>
           
+            <!-- <h4 style="text-align: center;font-size: 150%">Pie Chart</h4> -->
+          </div>
+          <div class="col-xs-3 col-md-3" style="padding-left: 300px; height: 250px;width: 600px; margin-top: 50px; margin-left: 100px">
+            <div  class="row" id="chart"></div> 
+          </div>
             
             
            

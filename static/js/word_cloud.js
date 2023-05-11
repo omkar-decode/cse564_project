@@ -6,8 +6,8 @@ function wc(country_name, year) {
         myWords = data_input;
 
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
-width = 450 - margin.left - margin.right,
-height = 450 - margin.top - margin.bottom;
+width = 600 - margin.left - margin.right,
+height = 300 - margin.top - margin.bottom;
 
 d3.selectAll("#word_cloud svg").remove()
 var svg = d3.select("#word_cloud").append("svg")
@@ -19,7 +19,7 @@ var svg = d3.select("#word_cloud").append("svg")
 
 var layout = d3.layout.cloud()
 .size([width, height])
-.words(myWords.map(function(d) { return {text: d.target_type, size:d.count}; }))
+.words(myWords.map(function(d) { return {text: d.target_type, size:d.count*2}; }))
 .padding(5)        //space between words
 .rotate(function() { return 360; })
 .fontSize(function(d) { return d.size; })      // font size of words
