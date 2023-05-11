@@ -35,6 +35,19 @@ function pieChart(country_name, year) {
           .sort(null);
           
           var prevArea = null;
+        //   var prevArea = d3.select(svg)
+        //   .style("cursor", "pointer")
+        //   .style("fill", "white")
+        //   .append("g")
+        //   .attr("class", "text-group");
+   
+        //   prevArea.append("text")
+        //   .attr("class", "name-text")
+        //   .text('Type of Attack')
+        //   .attr('text-anchor', 'middle')
+        //   .attr('dy', '0.3em')
+        //   .style("font-size", "25px");
+
           var path = g.selectAll('path')
           .data(pie(data))
           .enter()
@@ -50,6 +63,7 @@ function pieChart(country_name, year) {
                     d3.select(prevArea)
                     .select(".text-group").remove()
                 }
+                d3.selectAll(".name-text-base").remove();
                 prevArea = this;
            
                 g.append("text")
@@ -80,11 +94,20 @@ function pieChart(country_name, year) {
            
                 g.append("text")
                   .attr("class", "name-text")
-                  .text('Type of Attack')
+                  .text('Types of Attack')
                   .attr('text-anchor', 'middle')
                   .attr('dy', '0.3em')
                   .style("font-size", "25px");
-              })
+                // d3.select(".name-text-base").style("display", "block");
+              });
+        path.append("text")
+        .attr("class", "name-text-base")
+        .text('Types of Attack')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '0.3em')
+        .style("font-size", "25px")
+        .style("fill", "white");
+         path
             .append('path')
             .attr('d', arc)
             .attr('fill', (d,i) => color(i))

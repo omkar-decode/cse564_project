@@ -70,13 +70,13 @@ function ready(error, data, population) {
       .attr("d", path)
       .style("fill", function(d) { return color(d.frequency); })
       .style('stroke', 'white')
-      .style('stroke-width', 1.5)
-      .style("opacity",0.8)
-      // tooltips
-        .style("stroke","white")
-        .style('stroke-width', 0.3)
+      .style('stroke-width', function(d) { return d.properties.name === country_name ? 5 : 0.3 })
+      .style("opacity", function(d) {return d.properties.name === country_name ? 1 : 0.8 })
         .on('mouseover',function(d){
           tip.show(d);
+          if (country_name == d.properties.name) {
+            global_selected = this;
+          }
           if (this != global_selected) {
             d3.select(this)
               .style("cursor", "pointer")
@@ -87,8 +87,8 @@ function ready(error, data, population) {
             d3.select(this)
             .style("cursor", "pointer")
             .style("opacity", 1)
-            .style("stroke","white")
-            .style("stroke-width",5);
+            .style("stroke", "white")
+            .style("stroke-width", 5);
           }
         })
         .on('mouseout', function(d){
