@@ -81,11 +81,13 @@ function ready(error, data, population) {
           tip.show(d);
           if (this != global_selected) {
             d3.select(this)
+              .style("cursor", "pointer")
               .style("opacity", 1)
               .style("stroke","white")
               .style("stroke-width",2);
           } else {
             d3.select(this)
+            .style("cursor", "pointer")
             .style("opacity", 1)
             .style("stroke","white")
             .style("stroke-width",5);
@@ -95,6 +97,7 @@ function ready(error, data, population) {
           tip.hide(d);
           if (this != global_selected) {
             d3.select(this)
+            .style("cursor", "none")
               .style("opacity", 0.8)
               .style("stroke","white")
               .style("stroke-width",0.3);

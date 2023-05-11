@@ -17,28 +17,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route("/spiderChart/<country_name>")
-def spiderChart(country_name):
-    df_sc = df_clean.copy()
-    df_sc = df_sc.loc[df_sc['country_txt'].astype(str) == str(country_name)].iloc[0]
-    # print(df_sc)
-    
-    cost_columns = ['Cost of fruits', 
-        'Cost of vegetables',
-        'Cost of starchy staples',
-        'Cost of animal-source foods',
-        'Cost of legumes, nuts and seeds',
-        'Cost of oils and fats']
-
-    df_sc = df_sc[cost_columns] * 30
-    df_sc = df_sc.to_frame()
-    df_sc['axis'] = df_sc.index
-    df_sc['id'] = [country_name] * 6
-    df_sc = df_sc.rename(columns = {df_sc.columns[0]: "value"})
-    result = list(df_sc.T.to_dict().values())
-    return jsonify(result)
-
-
 @app.route("/pcp/<country_name>/<year>")
 def pcp(country_name, year):
     df_pcp = df_clean.copy()
@@ -50,7 +28,7 @@ def pcp(country_name, year):
     df_pcp = df_pcp[df_pcp['targtype1_txt'] != 'Unknown']
     df_pcp = df_pcp[df_pcp['targsubtype1_txt'] != 'Unknown']
     df_pcp = df_pcp[df_pcp['weaptype1_txt'] != 'Unknown']
-    num_points = min(80, len(df_pcp))
+    num_points = min(60, len(df_pcp))
     df_pcp = df_pcp.iloc[:num_points]
     df_pcp = df_pcp.rename(columns={'country_txt': 'Country', 'attacktype1_txt': 'Attack Type', 'city': 'City', 'gname': 'Group Name', 'targtype1_txt': 'Target Type', 'targsubtype1_txt': 'Target Subtype', 'weaptype1_txt': 'Weapon Type'})
     result = list(df_pcp.T.to_dict().values())

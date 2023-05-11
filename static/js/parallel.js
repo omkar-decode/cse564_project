@@ -71,7 +71,7 @@ var color = d3.scaleOrdinal()
 				dimensions.forEach(function(dimensions) {
 					dimensions.scale.domain(dimensions.type === "number"
 						? d3.extent(data, function(d) { return +d[dimensions.name]; })
-						: data.map(function(d) { return d[dimensions.name]; }).sort());
+						: data.map(function(d) { return d[dimensions.name]; }).sort().reverse());
 				});
 
 				// Add grey background lines for context.
@@ -88,9 +88,11 @@ var color = d3.scaleOrdinal()
 					.selectAll("path")
 						.data(data)
 					.enter().append("path")
-					.attr("class", function (d) { return "line " + d.Overall } )
+					// .attr("class", function (d) { return "line " + d.Overall} )
+					.attr("class", function (d) { return "line " + d['Group Name']} )
 					.attr("d", path)
-					.style("stroke", function(d){ return( color(d.Overall))} )
+					// .style("stroke", function(d){ return( color(d.Overall))} )
+					.style("stroke", function(d){ return( color(d['Group Name']))} )
 					.style("stroke-width",1.5)
                     .style("opacity", 0.4);
 
@@ -135,6 +137,7 @@ var color = d3.scaleOrdinal()
 							.attr("class", "axis-label")
 							.attr("y", -16)
 							.text(function(d) { return d.name; })
+							// .style('stroke')
 							.style("fill", "black");
 
 
@@ -143,20 +146,20 @@ var color = d3.scaleOrdinal()
 
 						// Add and store a brush for each axis.
                     // Add and store a brush for each axis.
-      g.append("g")
-      .attr("class", "brush")
-      .each(function(d) {
-        d3.select(this).call(
-          y[d.name].brush= d3.brushY()
-          .extent([[-10,0], [10,height]])
-          .on("start", brushstart)
-          .on("brush", brush)
-          .on("end", brush)
-        )
-      })
-    .selectAll("rect")
-      .attr("x", -8)
-      .attr("width", 16);
+				g.append("g")
+				.attr("class", "brush")
+				.each(function(d) {
+					d3.select(this).call(
+					y[d.name].brush= d3.brushY()
+					.extent([[-10,0], [10,height]])
+					.on("start", brushstart)
+					.on("brush", brush)
+					.on("end", brush)
+					)
+				})
+				.selectAll("rect")
+				.attr("x", -8)
+				.attr("width", 16);
 
 
 
