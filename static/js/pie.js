@@ -81,7 +81,7 @@ function pieChart(country_name, year) {
                   .text(`${d.data['Percentage']}` + '%')
                   .attr('text-anchor', 'middle')
                   .attr('dy', '1.6em')
-                  .style("font-size", "18px");
+                  .style("font-size", "40px");
               })
             .on("mouseout", function(d) {
                 d3.select(this)
