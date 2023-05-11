@@ -8,17 +8,22 @@ var margin = {top: 160, right: 50, bottom: 50, left: 100},
         }).then(function(data)  {
 				var dimensions = [
 				{
+					name: "Group Name",
+					scale: d3.scaleBand().range([height, 0]),
+					type: "string"
+				},
+				{
 					name: "City",
 					scale: d3.scaleBand().range([height, 0]),
     				type: "string"
 				},
 				{
-					name: "Group Name",
+					name: "Attack Type",
 					scale: d3.scaleBand().range([height, 0]),
     				type: "string"
 				},
 				{
-					name: "Attack Type",
+					name: "Weapon Type",
 					scale: d3.scaleBand().range([height, 0]),
     				type: "string"
 				},
@@ -30,13 +35,8 @@ var margin = {top: 160, right: 50, bottom: 50, left: 100},
 				{
 					name: "Target Subtype",
 					scale: d3.scaleBand().range([height, 0]),
-    				type: "string"
+					type: "string"
 				},
-				{
-					name: "Weapon Type",
-					scale: d3.scaleBand().range([height, 0]),
-    				type: "string"
-				}
 			];
 var color = d3.scaleOrdinal()
   .range(["#5298af","#D58323","#bd1a9a","#54AF52","#8C92E8","#E15E5A","#725D82","#776327","#50AB84","#954D56","#AB9C27","#517C3F","#9D5130","#357468","#5E9ACF","#C47DCB","#7D9E33","#DB7F85","#BA89AD","#4C6C86","#B59248","#D8597D","#944F7E","#D67D4B","#8F86C2"]);
@@ -67,12 +67,16 @@ var color = d3.scaleOrdinal()
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-				//Create the dimensions depending on attribute "type" (number|string)
-				//The x-scale calculates the position by attribute dimensions[x].name
-				dimensions.forEach(function(dimensions) {
-					dimensions.scale.domain(dimensions.type === "number"
-						? d3.extent(data, function(d) { return +d[dimensions.name]; })
-						: data.map(function(d) { return d[dimensions.name]; }).sort().reverse());
+				dimensions.forEach(function(dim) {
+					dim.scale.domain(data.map(function(d, index) { 
+						if (dim.name == 'City' || dim.name == 'Group Name' || dim.name == 'Target Subtype') {
+							if (index % 2 == 1) {
+								return d[dim.name]; 
+							}
+							return '';
+						}
+						return d[dim.name]; 
+					}).sort().reverse());
 				});
 
 				// Add grey background lines for context.
@@ -81,7 +85,8 @@ var color = d3.scaleOrdinal()
 					.selectAll("path")
 						.data(data)
 					.enter().append("path")
-						.attr("d", path);
+						.attr("d", path)
+						.style("opacity", 0.2);
 
 				// Add blue foreground lines for focus.
 				foreground = svg.append("g")
@@ -89,13 +94,11 @@ var color = d3.scaleOrdinal()
 					.selectAll("path")
 						.data(data)
 					.enter().append("path")
-					// .attr("class", function (d) { return "line " + d.Overall} )
 					.attr("class", function (d) { return "line " + d['Group Name']} )
 					.attr("d", path)
-					// .style("stroke", function(d){ return( color(d.Overall))} )
 					.style("stroke", function(d){ return( color(d['Group Name']))} )
 					.style("stroke-width",1.5)
-                    .style("opacity", 0.4);
+                    .style("opacity", 0.8);
 
 				// Add a group element for each dimension.
 				var g = svg.selectAll(".dimensions")
@@ -107,7 +110,7 @@ var color = d3.scaleOrdinal()
 								.subject(function(d) { return {x: x(d.name)}; })
 							.on("start", function(d) {
 								dragging[d.name] = x(d.name);
-								//background.attr("visibility", "hidden");
+								// background.attr("visibility", "hidden");
 							})
 							.on("drag", function(d) {
 								dragging[d.name] = Math.min(width, Math.max(0, d3.event.x));
@@ -132,16 +135,14 @@ var color = d3.scaleOrdinal()
 				// Add an axis and title.
 				g.append("g")
 						.attr("class", "axis")
-					.each( function(d) { d3.select(this).call(d3.axisLeft(d.scale)); })
+						.each( function(d) { d3.select(this).call(d3.axisLeft(d.scale)); })
 						.append("text")
 							.style("text-anchor", "middle")
+							.style('text-shadow', 'none')
 							.attr("class", "axis-label")
 							.attr("y", -16)
 							.text(function(d) { return d.name; })
-							// .style('stroke')
-							.style("fill", "black");
-
-
+							.style("fill", "white");
 
 
 
@@ -153,12 +154,13 @@ var color = d3.scaleOrdinal()
 					d3.select(this).call(
 					y[d.name].brush= d3.brushY()
 					.extent([[-10,0], [10,height]])
-					.on("start", brushstart)
+					// .on("start", brushstart)
 					.on("brush", brush)
-					.on("end", brush)
+					// .on("end", brush)
 					)
 				})
 				.selectAll("rect")
+				// .style('stroke', 'white')
 				.attr("x", -8)
 				.attr("width", 16);
 
@@ -176,23 +178,31 @@ var color = d3.scaleOrdinal()
 			// Returns the path for a given data point.
 			function path(d) {
 				//return line(dimensions.map(function(p) { return [position(p), y[p](d[p])]; }));
-				return line(dimensions.map(function(dimensions) {
-					var v = dragging[dimensions.name];
-					var tx = v == null ? x(dimensions.name) : v;
-					return [tx, dimensions.scale(d[dimensions.name]) + dimensions.scale.bandwidth() / 2];
+				return line(dimensions.map(function(dim) {
+					var v = dragging[dim.name];
+					var tx = v == null ? x(dim.name) : v;
+					return [tx, dim.scale(d[dim.name]) + dim.scale.bandwidth() / 2];
 				}));
+			}
+
+			function brush() {
+				// console.log('here')
+				var actives = dimensions.filter(function(d) { return typeof y[d.name].brush != 'undefined'; });
+				// console.log(actives)
+				var extents = actives.map(function(d) { /*console.log(d);*/ return y[d.name].brush.extent(); });
+				foreground.style("display", function(d) {
+				  return actives.every(function(p, i) {
+					return extents[i][0] <= d[p.name] && d[p.name] <= extents[i][1];
+				  }) ? null : "none";
+				});
 			}
 
 			function brushstart() {
       d3.event.sourceEvent.stopPropagation();
     }
-    // Handles a brush event, toggling the display of foreground lines.
-    function brushstart() {
-				d3.event.sourceEvent.stopPropagation();
-			}
 
 			// Handles a brush event, toggling the display of foreground lines.
-			function brush() {
+			function brush2() {
 				var actives=[];
         svg.selectAll(".brush")
         .filter(function(d){

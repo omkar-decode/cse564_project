@@ -10,5 +10,6 @@ function onYearButtonClicked(event) {
     world_map(year);
     pcp(country_name, year);
     wc(country_name, year);
-    pieChart(country_name, year)
+    pieChart(country_name, year);
+    create_chart(country_name, year);
 }
