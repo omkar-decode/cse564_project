@@ -17,28 +17,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route("/spiderChart/<country_name>")
-def spiderChart(country_name):
-    df_sc = df_clean.copy()
-    df_sc = df_sc.loc[df_sc['country_txt'].astype(str) == str(country_name)].iloc[0]
-    # print(df_sc)
-    
-    cost_columns = ['Cost of fruits', 
-        'Cost of vegetables',
-        'Cost of starchy staples',
-        'Cost of animal-source foods',
-        'Cost of legumes, nuts and seeds',
-        'Cost of oils and fats']
-
-    df_sc = df_sc[cost_columns] * 30
-    df_sc = df_sc.to_frame()
-    df_sc['axis'] = df_sc.index
-    df_sc['id'] = [country_name] * 6
-    df_sc = df_sc.rename(columns = {df_sc.columns[0]: "value"})
-    result = list(df_sc.T.to_dict().values())
-    return jsonify(result)
-
-
 @app.route("/pcp/<country_name>/<year>")
 def pcp(country_name, year):
     df_pcp = df_clean.copy()
@@ -50,8 +28,10 @@ def pcp(country_name, year):
     df_pcp = df_pcp[df_pcp['targtype1_txt'] != 'Unknown']
     df_pcp = df_pcp[df_pcp['targsubtype1_txt'] != 'Unknown']
     df_pcp = df_pcp[df_pcp['weaptype1_txt'] != 'Unknown']
-    num_points = min(80, len(df_pcp))
+    num_points = min(60, len(df_pcp))
     df_pcp = df_pcp.iloc[:num_points]
+    for col in df_pcp.columns:
+        df_pcp[col] = df_pcp[col].apply(lambda x: str(x)[:12])
     df_pcp = df_pcp.rename(columns={'country_txt': 'Country', 'attacktype1_txt': 'Attack Type', 'city': 'City', 'gname': 'Group Name', 'targtype1_txt': 'Target Type', 'targsubtype1_txt': 'Target Subtype', 'weaptype1_txt': 'Weapon Type'})
     result = list(df_pcp.T.to_dict().values())
     return jsonify(result)
@@ -70,6 +50,18 @@ def pcp(country_name, year):
 #     result = list(age_counts.T.to_dict().values())
 #     return jsonify(result)
 
+@app.route("/lineplot/<country_name>/<year>")
+def lineplot(country_name, year):
+    df_lp = df_clean.copy()
+    df_lp = df_lp[['iyear', 'country_txt', 'nkilled', 'nwounded', 'start_year']]
+    df_lp = df_lp[df_lp['country_txt'] == country_name]
+    df_lp = df_lp[df_lp['start_year'] == int(year)]
+    df_lp = df_lp.drop(['start_year', 'country_txt'], axis = 1)
+    df_lp_agg = df_lp.groupby(['iyear']).sum()
+    df_lp_agg = df_lp_agg.reset_index()
+    df_lp_agg = df_lp_agg.rename(columns={'iyear': 'Year', 'nkilled': 'Number Killed', 'nwounded': 'Number Wounded'})
+    result = list(df_lp_agg.T.to_dict().values())
+    return jsonify(result)
 
 @app.route("/wc/<country_name>/<year>")
 def wc(country_name, year):
@@ -81,6 +73,23 @@ def wc(country_name, year):
     df_wc_agg = df_wc_agg.drop(['country_txt'], axis = 1)
     df_wc_agg = df_wc_agg.rename(columns={'targtype1_txt': 'target_type', 'iyear': 'count'})
     result = list(df_wc_agg.T.to_dict().values())
+    return jsonify(result)
+
+
+@app.route("/pie/<country_name>/<year>")
+def pie(country_name, year):
+    df_pie = df_clean.copy()
+    df_pie = df_pie[['attacktype1_txt', 'start_year', 'country_txt']]
+    df_pie = df_pie[df_pie['start_year'] == int(year)]
+    df_pie = df_pie[df_pie['country_txt'] == country_name]
+    df_pie = df_pie.drop(['country_txt'], axis=1)
+    df_pie_agg = df_pie.groupby(['attacktype1_txt']).count()
+    total = df_pie_agg['start_year'].sum()
+    df_pie_agg = (df_pie_agg / total) * 100
+    df_pie_agg = df_pie_agg.reset_index()
+    df_pie_agg = df_pie_agg.rename(columns={'attacktype1_txt': 'Attack Type', 'start_year': 'Percentage'})
+    df_pie_agg['Percentage'] = df_pie_agg['Percentage'].apply(int)
+    result = list(df_pie_agg.T.to_dict().values())
     return jsonify(result)
 
 

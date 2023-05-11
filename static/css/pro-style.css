@@ -27,9 +27,10 @@ svg {
 }
 
 .axis text {
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff; */
   cursor: move;
-  color: black;
+  color: white;
+  stroke: #eee;
 }
 
 .names {
@@ -158,13 +159,14 @@ svg {
       .axis line,
       .axis path {
         fill: none;
-        stroke: #000;
+        stroke: #fff;
         shape-rendering: crispEdges;
       }
 
       .axis text {
-        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+        /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff; */
         cursor: move;
+        color: #eee;
       }
 
       .axis .axis-label {
