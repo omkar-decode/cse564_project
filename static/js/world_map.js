@@ -1,3 +1,5 @@
+var global_selected = null;
+
 function world_map(year) {
 
   d3.selectAll("#world_map svg").remove()
@@ -17,9 +19,8 @@ var margin = {top: 0, right: 0, bottom: 0, left: 0},
 
 var color = d3.scaleThreshold()
     .domain([0,10,50,100,200,500,800,1000,3000,5000])
-    // .domain([1000,800,600,400,100,50,10,5,1,0])
-    // .range(["rgb(32, 62, 78)", "rgb(0, 66, 109)", "rgb(0, 108, 132)", "rgb(0, 121, 142)", "rgb(0, 133, 149)", "rgb(0, 146, 153)", "rgb(0, 171, 150)", "rgb(0, 195, 134)", "rgb(0, 217, 104)", "rgb(11, 238, 54)"]);
-    .range(["rgb(11, 238, 54)", "rgb(0, 217, 104)", "rgb(0, 195, 134)", "rgb(0, 171, 150)", "rgb(0, 146, 153)", "rgb(0, 133, 149)", "rgb(0, 121, 142)", "rgb(0, 108, 132)", "rgb(0, 66, 109)", "rgb(32, 62, 78)"]); 
+    // .range(["rgb(11, 238, 54)", "rgb(0, 217, 104)", "rgb(0, 195, 134)", "rgb(0, 171, 150)", "rgb(0, 146, 153)", "rgb(0, 133, 149)", "rgb(0, 121, 142)", "rgb(0, 108, 132)", "rgb(0, 66, 109)", "rgb(32, 62, 78)"]); 
+    .range(['rgb(255,255,255)', 'rgb(255,245,240)', 'rgb(254,224,210)', 'rgb(252,187,161)', 'rgb(252,146,114)', 'rgb(251,106,74)', 'rgb(239,59,44)', 'rgb(203,24,29)', 'rgb(165,15,21)', 'rgb(103,0,13)'])
 
 var path = d3.geoPath();
 
@@ -60,6 +61,8 @@ function ready(error, data, population) {
     }
   });
 
+
+
   svg.append("g")
       .attr("class", "countries")
     .selectAll("path")
@@ -76,21 +79,39 @@ function ready(error, data, population) {
         .style('stroke-width', 0.3)
         .on('mouseover',function(d){
           tip.show(d);
-
-          d3.select(this)
+          if (this != global_selected) {
+            d3.select(this)
+              .style("opacity", 1)
+              .style("stroke","white")
+              .style("stroke-width",2);
+          } else {
+            d3.select(this)
             .style("opacity", 1)
             .style("stroke","white")
-            .style("stroke-width",3);
+            .style("stroke-width",5);
+          }
         })
         .on('mouseout', function(d){
           tip.hide(d);
-
-          d3.select(this)
-            .style("opacity", 0.8)
-            .style("stroke","white")
-            .style("stroke-width",0.3);
+          if (this != global_selected) {
+            d3.select(this)
+              .style("opacity", 0.8)
+              .style("stroke","white")
+              .style("stroke-width",0.3);
+          }
         })
         .on('click',function(d){
+          if (typeof global_selected !== "undefined") {
+            d3.select(global_selected)
+              .style("opacity", 0.8)
+              .style("stroke","white")
+              .style("stroke-width",0.3);
+          }
+          global_selected = this;
+          d3.select(this)
+            .style("opacity", 1)
+            .style("stroke","white")
+            .style("stroke-width",5);
         country_name = d.properties.name
         pcp(country_name, year)
         // createSpiderChart(country_name)
