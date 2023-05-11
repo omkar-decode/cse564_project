@@ -84,5 +84,22 @@ def wc(country_name, year):
     return jsonify(result)
 
 
+@app.route("/pie/<country_name>/<year>")
+def pie(country_name, year):
+    df_pie = df_clean.copy()
+    df_pie = df_pie[['attacktype1_txt', 'start_year', 'country_txt']]
+    df_pie = df_pie[df_pie['start_year'] == int(year)]
+    df_pie = df_pie[df_pie['country_txt'] == country_name]
+    df_pie = df_pie.drop(['country_txt'], axis=1)
+    df_pie_agg = df_pie.groupby(['attacktype1_txt']).count()
+    total = df_pie_agg['start_year'].sum()
+    df_pie_agg = (df_pie_agg / total) * 100
+    df_pie_agg = df_pie_agg.reset_index()
+    df_pie_agg = df_pie_agg.rename(columns={'attacktype1_txt': 'Attack Type', 'start_year': 'Percentage'})
+    df_pie_agg['Percentage'] = df_pie_agg['Percentage'].apply(int)
+    result = list(df_pie_agg.T.to_dict().values())
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run()
