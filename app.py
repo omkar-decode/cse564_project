@@ -30,6 +30,8 @@ def pcp(country_name, year):
     df_pcp = df_pcp[df_pcp['weaptype1_txt'] != 'Unknown']
     num_points = min(60, len(df_pcp))
     df_pcp = df_pcp.iloc[:num_points]
+    for col in df_pcp.columns:
+        df_pcp[col] = df_pcp[col].apply(lambda x: str(x)[:12])
     df_pcp = df_pcp.rename(columns={'country_txt': 'Country', 'attacktype1_txt': 'Attack Type', 'city': 'City', 'gname': 'Group Name', 'targtype1_txt': 'Target Type', 'targsubtype1_txt': 'Target Subtype', 'weaptype1_txt': 'Weapon Type'})
     result = list(df_pcp.T.to_dict().values())
     return jsonify(result)

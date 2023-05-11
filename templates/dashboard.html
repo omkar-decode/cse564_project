@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/d3-tip.css">
     <link rel="stylesheet" type="text/css" href="../static/css/hp.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/lineplot.css">
     <script src="../static/js/d3.v4.js"></script>
     <script src="../static/js/d3-tip-test.js"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
@@ -26,27 +27,6 @@
     <script src="../static/js/line_plot.js"></script>
     <script src="../static/js/post.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
-    <style>
-      svg {
-    font-family: Sans-Serif, Arial;
-}
-.line {
-  stroke-width: 2;
-  fill: none;
-}
-
-.axis path {
-  stroke: black;
-}
-
-.text {
-  font-size: 12px;
-}
-
-.title-text {
-  font-size: 12px;
-}
-   </style>
   </head>
   <body style="background-color: #1A1A1A;">
     <!-- <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 6vh;">
@@ -76,7 +56,6 @@
         </div>
         <div class="col-xs-7 col-md-6">
           <div class="col-xs-5 col-md-5" style="font-weight: bold; height: 500px;width: 500px;">
-            <!-- <div class="col-xs-6 col-md-6"id="spider" style="margin-top: 10%;"> -->
               <div id="word_cloud"></div>
           </div>
           <div id="pie_chart" style="margin-left: 480px; margin-top: 100px;">
@@ -101,7 +80,7 @@
 <script>
 
   var country_name = 'United States'
-  var year = 2010
+  var year = 1970
   world_map(year);
   pcp(country_name, year);
   wc(country_name, year);

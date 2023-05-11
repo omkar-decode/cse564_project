@@ -19,7 +19,6 @@ var margin = {top: 0, right: 0, bottom: 0, left: 0},
 
 var color = d3.scaleThreshold()
     .domain([0,10,50,100,200,500,800,1000,3000,5000])
-    // .range(["rgb(11, 238, 54)", "rgb(0, 217, 104)", "rgb(0, 195, 134)", "rgb(0, 171, 150)", "rgb(0, 146, 153)", "rgb(0, 133, 149)", "rgb(0, 121, 142)", "rgb(0, 108, 132)", "rgb(0, 66, 109)", "rgb(32, 62, 78)"]); 
     .range(['rgb(255,255,255)', 'rgb(255,245,240)', 'rgb(254,224,210)', 'rgb(252,187,161)', 'rgb(252,146,114)', 'rgb(251,106,74)', 'rgb(239,59,44)', 'rgb(203,24,29)', 'rgb(165,15,21)', 'rgb(103,0,13)'])
 
 var path = d3.geoPath();
@@ -69,7 +68,6 @@ function ready(error, data, population) {
       .data(data.features)
     .enter().append("path")
       .attr("d", path)
-      // .style("fill", function(d) { return color(populationById[d.properties.name]); })
       .style("fill", function(d) { return color(d.frequency); })
       .style('stroke', 'white')
       .style('stroke-width', 1.5)
@@ -118,21 +116,9 @@ function ready(error, data, population) {
         country_name = d.properties.name
         pcp(country_name, year)
         create_chart(country_name, year)
-        // createSpiderChart(country_name)
-        // pcp(country_name)
-        // line_plot('Age');
-        // line_plot('Value');
-        // line_plot('Overall');
         wc(country_name, year)
         pieChart(country_name, year)
         });
-        // .on('dblclick',function(d){
-        // country_name = "world"
-        // pcp()
-        // line_plot('Age');
-        // line_plot('Value');
-        // line_plot('Overall');
-        // });
 
   svg.append("path")
       .datum(topojson.mesh(data.features, function(a, b) { return a.id !== b.id; }))

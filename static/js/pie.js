@@ -34,6 +34,7 @@ function pieChart(country_name, year) {
           .value(function(d) { return d['Percentage']; })
           .sort(null);
           
+          var prevArea = null;
           var path = g.selectAll('path')
           .data(pie(data))
           .enter()
@@ -41,9 +42,15 @@ function pieChart(country_name, year) {
           .on("mouseover", function(d) {
                 let g = d3.select(this)
                   .style("cursor", "pointer")
-                  .style("fill", "black")
+                  .style("fill", "white")
                   .append("g")
                   .attr("class", "text-group");
+
+                if (typeof prevArea != "undefined") {
+                    d3.select(prevArea)
+                    .select(".text-group").remove()
+                }
+                prevArea = this;
            
                 g.append("text")
                   .attr("class", "name-text")
@@ -57,13 +64,26 @@ function pieChart(country_name, year) {
                   .text(`${d.data['Percentage']}` + '%')
                   .attr('text-anchor', 'middle')
                   .attr('dy', '1.6em')
-                  .style("font-size", "18px");;
+                  .style("font-size", "18px");
               })
             .on("mouseout", function(d) {
                 d3.select(this)
                   .style("cursor", "none")  
                   .style("fill", color(this._current))
-                  .select(".text-group").remove();
+                  .select(".text-group").remove()
+
+                let g = d3.select(this)
+                  .style("cursor", "pointer")
+                  .style("fill", "white")
+                  .append("g")
+                  .attr("class", "text-group");
+           
+                g.append("text")
+                  .attr("class", "name-text")
+                  .text('Type of Attack')
+                  .attr('text-anchor', 'middle')
+                  .attr('dy', '0.3em')
+                  .style("font-size", "25px");
               })
             .append('path')
             .attr('d', arc)
@@ -71,7 +91,7 @@ function pieChart(country_name, year) {
             .on("mouseover", function(d) {
                 d3.select(this)     
                   .style("cursor", "pointer")
-                  .style("fill", "black");
+                  .style("fill", "#EEEEEE");
               })
             .on("mouseout", function(d) {
                 d3.select(this)
