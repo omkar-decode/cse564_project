@@ -117,6 +117,7 @@ function ready(error, data, population) {
             .style("stroke-width",5);
         country_name = d.properties.name
         pcp(country_name, year)
+        create_chart(country_name, year)
         // createSpiderChart(country_name)
         // pcp(country_name)
         // line_plot('Age');

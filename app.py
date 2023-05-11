@@ -48,6 +48,18 @@ def pcp(country_name, year):
 #     result = list(age_counts.T.to_dict().values())
 #     return jsonify(result)
 
+@app.route("/lineplot/<country_name>/<year>")
+def lineplot(country_name, year):
+    df_lp = df_clean.copy()
+    df_lp = df_lp[['iyear', 'country_txt', 'nkilled', 'nwounded', 'start_year']]
+    df_lp = df_lp[df_lp['country_txt'] == country_name]
+    df_lp = df_lp[df_lp['start_year'] == int(year)]
+    df_lp = df_lp.drop(['start_year', 'country_txt'], axis = 1)
+    df_lp_agg = df_lp.groupby(['iyear']).sum()
+    df_lp_agg = df_lp_agg.reset_index()
+    df_lp_agg = df_lp_agg.rename(columns={'iyear': 'Year', 'nkilled': 'Number Killed', 'nwounded': 'Number Wounded'})
+    result = list(df_lp_agg.T.to_dict().values())
+    return jsonify(result)
 
 @app.route("/wc/<country_name>/<year>")
 def wc(country_name, year):

@@ -1,7 +1,7 @@
 function pcp(country_name, year){
 var margin = {top: 160, right: 50, bottom: 50, left: 100},
 			width = 1100 - margin.left - margin.right,
-			height = 600 - margin.top - margin.bottom;
+			height = 580 - margin.top - margin.bottom;
 	fetch('/pcp/' + country_name + '/' + year)
         .then(function(response){
         return response.json()
@@ -178,7 +178,7 @@ var color = d3.scaleOrdinal()
 				return line(dimensions.map(function(dimensions) {
 					var v = dragging[dimensions.name];
 					var tx = v == null ? x(dimensions.name) : v;
-					return [tx, dimensions.scale(d[dimensions.name])];
+					return [tx, dimensions.scale(d[dimensions.name]) + dimensions.scale.bandwidth() / 2];
 				}));
 			}
 

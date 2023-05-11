@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/d3-tip.css">
     <link rel="stylesheet" type="text/css" href="../static/css/hp.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/pcp.css">
-
     <script src="../static/js/d3.v4.js"></script>
     <script src="../static/js/d3-tip-test.js"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
@@ -25,16 +23,37 @@
     <script src="../static/js/parallel.js"></script>
     <script src="../static/js/world_map.js"></script>
     <script src="../static/js/word_cloud.js"></script>
+    <script src="../static/js/line_plot.js"></script>
     <script src="../static/js/post.js"></script>
-    <!-- <script src="../static/js/multi-line-plot.js"></script> -->
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+    <style>
+      svg {
+    font-family: Sans-Serif, Arial;
+}
+.line {
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path {
+  stroke: black;
+}
+
+.text {
+  font-size: 12px;
+}
+
+.title-text {
+  font-size: 12px;
+}
+   </style>
   </head>
   <body style="background-color: #1A1A1A;">
     <!-- <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 6vh;">
       <div id="mds1" style="color: white; max-width: 100vw;overflow: visible;min-height:100vh;">
       </nav> -->
       <div class="row" style="backdrop-filter: blur(8px);">
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-7 col-md-6">
           <div class="row" style="margin-top: 10px;">
               <div class="col-xs-8 col-md-8" id="world_map" style="  height: 450px;width:710px;padding-left: 0px;">
                 <div id="year_buttons" class="btn-group" style="margin-left: 40px;">
@@ -55,33 +74,26 @@
             
           </div>
         </div>
-          <div class="col-xs-6 col-md-6" style="font-weight: bold;padding-left: 3%; height: 880px;width: 780px;">
-              <!-- <div class="col-xs-6 col-md-6"id="spider" style="margin-top: 10%;">
-                
-            </div> -->
-            <div class="col-xs-4 col-md-4 box" id="word_cloud"  style=" width: 407px; margin-top: 10%;">
-              <h4 style="text-align: center;font-size: 150%">Word Cloud</h4>
-            </div>
-            <div id="pie_chart" style="margin-left: 480px; margin-top: 100px;">
-              <!-- <h4 style="text-align: center;font-size: 150%">Pie Chart</h4> -->
-            </div>
-            <!-- <div class="col-xs-3 col-md-3" style="padding-left: 5%;width: 27%;height: 430px;width: 407px;">
-              <div class="row" id="Age" >
-                <h4 style="text-align: center;font-size: 150%; color: #fff;">Line Plot Age</h4>
-              </div>
-
-            <div class="row" id="Value" >
-                <h4 style="text-align: center;font-size: 150%; color: #fff;">Line Plot Value</h4>
-              </div>
-
-            <div class="row" id="Overall" >
-                <h4 style="text-align: center;font-size: 150%; color: #fff;">Line Plot Overall</h4>
-              </div>
-            </div>   -->
+        <div class="col-xs-7 col-md-6">
+          <div class="col-xs-5 col-md-5" style="font-weight: bold; height: 500px;width: 500px;">
+            <!-- <div class="col-xs-6 col-md-6"id="spider" style="margin-top: 10%;"> -->
+              <div id="word_cloud"></div>
+          </div>
+          <div id="pie_chart" style="margin-left: 480px; margin-top: 100px;">
+            <!-- <h4 style="text-align: center;font-size: 150%">Pie Chart</h4> -->
           </div>
            
-          <!-- <div id="chart">multi-line-plot</div> -->
+        </div>
+        <div class="col-xs-3 col-md-3" style="padding-left: 300px; height: 250px;width: 600px; margin-top: 150px">
+          <div  class="row" id="chart"></div> 
+        </div>
+          
+            
+            
+           
+          
       </div>
+      
     </div>
   </body>
 
@@ -92,10 +104,9 @@
   var year = 2010
   world_map(year);
   pcp(country_name, year);
-  //create_multiline_chart();
   wc(country_name, year);
   pieChart(country_name, year)
-  
+  create_chart(country_name, year)
 </script>
 <link rel="stylesheet" type="text/css" href="../static/css/pro-style.css">
 </html>
