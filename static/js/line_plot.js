@@ -69,7 +69,8 @@ function create_chart(country_name,year) {
         .domain([0, Math.max(max1, max2)])
         .range([height-margin, 0]);
       
-      var color = d3.scaleOrdinal(d3.schemeCategory10);
+      //var color = d3.scaleOrdinal(d3.schemeCategory10);
+      color = ['#FC4F3C','#FFA84C']
       
       /* Add SVG */
       d3.selectAll("#chart svg").remove()
@@ -96,7 +97,7 @@ function create_chart(country_name,year) {
         .on("mouseover", function(d, i) {
             svg.append("text")
               .attr("class", "title-text")
-              .style("fill", color(i))        
+              .style("fill", color[i])        
               .text(d.name)
               .style("font-size", '20px')
               .attr("text-anchor", "middle")
@@ -109,7 +110,7 @@ function create_chart(country_name,year) {
         .append('path')
         .attr('class', 'line')  
         .attr('d', d => line(d.values))
-        .style('stroke', (d, i) => color(i))
+        .style('stroke', (d, i) => color[i])
         .style("stroke-width", lineStroke)
         .style('opacity', lineOpacity)
         .on("mouseover", function(d) {
@@ -137,7 +138,7 @@ function create_chart(country_name,year) {
       lines.selectAll("circle-group")
         .data(data).enter()
         .append("g")
-        .style("fill", (d, i) => color(i))
+        .style("fill", (d, i) => color[i])
         .selectAll("circle")
         .data(d => d.values).enter()
         .append("g")

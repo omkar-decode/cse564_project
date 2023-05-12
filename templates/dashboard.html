@@ -29,42 +29,36 @@
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
   </head>
   <body style="background-color: #1A1A1A; max-width: 100vw; overflow: hidden;">
-    <!-- <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 6vh;">
-      <div id="mds1" style="color: white; max-width: 100vw;overflow: visible;min-height:100vh;">
-      </nav> -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="height: 5vh; background-color:#1A1A1A;">
+      <div id="mds1" style="color: white; max-width: 100vw;overflow: visible;min-height:5vh;">
+        <h1 style="text-align: center; font-size: 36px;">Global Terrorism</h1>
+      </nav>
       <div class="row" style="backdrop-filter: blur(8px);">
         <div class="col-xs-7 col-md-5">
           <div class="row" style="margin-top: 10px;">
               <div id="world_map" style="  height: 800px;width:700px; padding-bottom: 200px;">
-                <div id="year_buttons" class="btn-group" style="margin-left: 40px; margin-bottom: 20px; margin-top: 30px;">
-                  <button id="btn1" type="button" class="btn btn-primary active btn-danger" onclick="onYearButtonClicked(this)">1970-1980</button>
-                  <button id="btn2" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1980-1990</button>
-                  <button id="btn3" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">1990-2000</button>
-                  <button id="btn4" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">2000-2010</button>
-                  <button id="btn5" type="button" class="btn btn-secondary" onclick="onYearButtonClicked(this)">2010-2020</button>
+                <div id="year_buttons" class="btn-group" style="margin-left: 40px; margin-bottom: -15px; margin-top: 65px;">
+                  <button id="btn1" type="button" class="btn btn-primary active btn-danger btn-lg" onclick="onYearButtonClicked(this)">1970-1980</button>
+                  <button id="btn2" type="button" class="btn btn-secondary btn-lg" onclick="onYearButtonClicked(this)">1980-1990</button>
+                  <button id="btn3" type="button" class="btn btn-secondary btn-lg" onclick="onYearButtonClicked(this)">1990-2000</button>
+                  <button id="btn4" type="button" class="btn btn-secondary btn-lg" onclick="onYearButtonClicked(this)">2000-2010</button>
+                  <button id="btn5" type="button" class="btn btn-secondary btn-lg" onclick="onYearButtonClicked(this)">2010-2020</button>
                 </div>
-                <!-- <h4 style="text-align: center;font-size: 150%">World Map</h4> -->
               </div>
               
-              <div class="col-xs-5 col-md-5" id="pie_chart" style="padding-left: 100px;"></div>
-              <div class="col-xs-5 col-md-5" style="font-weight: bold; padding-left: 200px;">
-  
-                  <div id="word_cloud"></div>
+              <div class="col-xs-6 col-md-6" id="pie_chart" style="margin-left: 50px;"></div>
+              <div class="col-xs-3 col-md-5" id="word_cloud" style="font-weight: bold;">
               </div>
-          
         </div>
         
            
         </div>
         <div class="col-xs-7 col-md-6">
           <div style="padding-top: 20px;">
-            <!-- <h4 style="padding-top: 30px; padding-left: 520px;">Parallel Coordinate Plot</h4> -->
               <div id="pcp" class="pcp"></div>
           </div>
-          
-            <!-- <h4 style="text-align: center;font-size: 150%">Pie Chart</h4> -->
           </div>
-          <div class="col-xs-3 col-md-3" style="padding-left: 300px; height: 250px;width: 600px; margin-top: 50px; margin-left: 100px">
+          <div class="col-xs-3 col-md-3" style="padding-left: 300px; height: 250px;width: 600px; margin-top: 20px; margin-left: 100px">
             <div  class="row" id="chart"></div> 
           </div>
             
